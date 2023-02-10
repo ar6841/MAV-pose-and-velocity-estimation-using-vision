@@ -1,5 +1,5 @@
 # MAV-Pose-Estimation-using-vision
-Estimation of the position,attitude and velocity of a drone using perspective projection and optical flow.
+Estimation of the position,attitude and velocity of a Micro Aerial Vehicle using perspective projection and optical flow.
 
 1_pose_estimation estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose)
 
