@@ -5,6 +5,8 @@ Estimation of the position,attitude and velocity of a drone using perspective pr
 
 2_optical_flow estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow)
 
+Check: https://github.com/ar6841/MAV-state-estimation-using-extended-Kalman-filter for state estimation using Extended Kalman Filtering 
+
 The tracking results are shown below:
 
 ### Part 1
