@@ -5,6 +5,43 @@ Estimation of the position,attitude and velocity of a drone using perspective pr
 
 2_optical_flow estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow)
 
+The tracking results are shown below:
+
+### Part 1
+
+Data set 1:
+
+![image](https://user-images.githubusercontent.com/96152967/218155586-b6060c1d-17da-4984-80d9-bd16aee48fd7.png)
+
+Data set 4:
+
+![image](https://user-images.githubusercontent.com/96152967/218155659-7bfc1da9-a0ca-49a4-a82c-05d30fd295f5.png)
+
+### Part 2 
+
+#### Without RANSAC:
+
+Data set 1:
+
+![image](https://user-images.githubusercontent.com/96152967/218156278-1002ae65-74dc-4c8e-b70b-c74c13e2fedb.png)
+
+
+Data set 4:
+
+![image](https://user-images.githubusercontent.com/96152967/218156176-29ac2746-ad50-4710-abae-38af12ed4673.png)
+
+
+#### With RANSAC:
+
+Data set 1:
+
+![image](https://user-images.githubusercontent.com/96152967/218156101-334e246b-103d-4566-8152-b1b1e4d8814a.png)
+
+Data set 4:
+
+![image](https://user-images.githubusercontent.com/96152967/218156144-b87ae616-28a0-4487-947f-42283040dc41.png)
+
+
 
 
 A detailed explanation of the project and the code is given below:
@@ -109,7 +146,18 @@ The pixel coordinates of matched_points1 and matched_points2 need to be normaliz
 Note: in the code ‘n’ represents the timestamp ‘t’.
 
 ## Optical Flow
-The optical flow of the image can be calculated by finding the shift in normalized pixel coordinate vector and dividing by change in time between frames. $\left[\begin{array}{l}\dot{x} \\ \dot{y}\end{array}\right]=\frac{1}{\Delta t}\left[\begin{array}{l}\Delta x \\ \Delta y\end{array}\right]$
+The optical flow of the image can be calculated by finding the shift in normalized pixel coordinate vector and dividing by change in time between frames. 
+
+$$
+\left[\begin{array}{l}
+\dot{x} \\
+\dot{y}
+\end{array}\right]=\frac{1}{\Delta t}\left[\begin{array}{l}
+\Delta x \\
+\Delta y
+\end{array}\right]
+$$
+
 The $\Delta t$ is passed through a lowpass filter to smooth the results. The optical flow $\dot{\mathbf{p}}$ is represented by p_dot and opt_flow in the code.
 
 ## Velocity Estimation
@@ -196,7 +244,7 @@ with sampling rate 1000 and fs_pass 1 to smooth out the graph.
 ## RANSAC based outlier rejection
 To improve the results from the previous phase, a flag in the parameter section, ransac_flag can be changed to true. This implements the RANSAC based 3 point outlier rejection in the code. When the flag is set to true, the function velocityRANSAC is called. 
 
-
+The inputs to this function are the optical flow of the matched corners opt $\mathrm{V}$, the normalized image coordinates of the matched corners in frame (t-1) optPos, the depth of the corners in the camera frame Z, ${ }^C \boldsymbol{R}_W$ and the RANSAC hyper parameter $\epsilon$. The output of the function is the $(6,1)$ velocity vector $\boldsymbol{V}$ in the camera frame.
 
 
 
