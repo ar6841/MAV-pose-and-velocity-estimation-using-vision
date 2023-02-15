@@ -51,9 +51,19 @@ A detailed explanation of the project and the code is given below:
 
 This project entails vision-based estimation of pose, velocity and angular velocity of a drone. The data for this was collected using a Nano+ quadrotor that was either held by hand or flown through a prescribed trajectory over a mat of AprilTags, each of which has a unique ID. 
 
+## April Tags grid layout
+
 The tags are arranged in a 12 x 9 grid. The top left corner of the top left tag has been used as coordinate (0, 0) with the X coordinate going down the mat and the Y coordinate going to the right. Each tag is a 0.152 m square with 0.152 m between tags, except for the space between columns 3 and 4, and 6 and 7, which is 0.178 m.
 
 In an ideal case with no offsets (ignore the 0.178 m for now), let d be the length of the square and distance between the squares (d=0.152). For some (i,j)∈N which denote increments of AprilTags along the positive X and Y axes respectively, the x and y distances for each point of all AprilTags form an arithmetic sequence. The world frame coordinates of points p0, p1, p2, p3 and p4 of all the AprilTags are computed in the getCorner function. Here the offset kicks into the y position when j>3 and j>6. A table of (x,y) positions is created where the columns signify the AprilTag ID and the rows signify the (x,y) coordinates stored in the order p0, p1, p2, p3. This table ‘res_table’ is a persistent variable and exists between function calls to improve performance and is only created the first time the function getCorner is used. Subsequently only the ID column is pulled out and given as the output.
+
+The images below are a visualization of the grid layout:
+
+![image](https://user-images.githubusercontent.com/96152967/219221651-0cff144d-0dd7-46dd-b66a-5210a7142e9d.png)
+
+
+![image](https://user-images.githubusercontent.com/96152967/219221399-7427cd09-143d-4988-94dd-b5991f4d910c.png)
+
 
 ## Pose Estimation
 The pose of the MAV describes the position and orientation of the MAV in the world frame. This is computed in the estimatePose() function. The first goal is to use the captured data which contains the AprilTag ID, image coordinates of the points p0, p1, p2, p3, p4 for that tag ID and compute the homography of the camera at time stamp (t). The homography can be computed because we know the world frame coordinates of all the points for all the AprilTags. The homography can be computed by solving the equation
