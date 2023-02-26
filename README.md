@@ -206,7 +206,13 @@ Where $\boldsymbol{V}$ is a $(6,1)$ vector containing the linear and angular vel
 
 ![image](https://user-images.githubusercontent.com/96152967/218152799-e8397424-7536-4a6c-abd7-914f923c8238.png)
 
-If the corner detected is at $\left(\begin{array}{l}x_c \\ y_c \\ z_c\end{array}\right)$ in the camera frame, then we can form the vector sum:
+$$
+\text { If the corner detected is at }\left(\begin{array}{l}
+x_c \\
+y_c \\
+z_c
+\end{array}\right) \text { in the camera frame, then we can form the vector sum: }
+$$
 
 $$
 { }^C P_W+{ }^C R_W\left(\begin{array}{l}
@@ -220,7 +226,24 @@ z_c
 \end{array}\right) \text { where }
 $$
 
-${ }^C \boldsymbol{P}_W$ is the position of the origin of the world frame written in the camera frame $\left(\begin{array}{l}x_c \\ y_c \\ z_c\end{array}\right)=\lambda\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)$ where $\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)$ are the normalized image coordinates
+${ }^C \boldsymbol{P}_W$ is the position of the origin of the world frame written in the camera frame 
+
+$$
+\left(\begin{array}{l}
+x_c \\
+y_c \\
+z_c
+\end{array}\right)=\lambda\left(\begin{array}{l}
+x \\
+y \\
+1
+\end{array}\right) \text { where }\left(\begin{array}{l}
+x \\
+y \\
+1
+\end{array}\right) \text { are the normalized image coordinates }
+$$
+
 Note: in the code ${ }^C P_W$ is represented by position_cam. When we expand ${ }^C R_W$ and simplify as a system of linear equations we get.
 
 $$
@@ -247,7 +270,17 @@ r_{31} & r_{32} & -1
 \end{aligned}
 $$
 
-As $\lambda$ is $Z_n$ of the corner we can now compute the $\mathrm{H}$ matrix for all the corners in the (t-1) frame, vertically concatenate them, and using the optical flow $\dot{\mathbf{p}}$, the velocity $\boldsymbol{V}$ in the equation $\left(\begin{array}{l}\mathbf{V} \\ \boldsymbol{\Omega}\end{array}\right)=$ $\operatorname{pinv}(\boldsymbol{H}) \dot{\mathbf{p}}$ can be calculated. Where $\operatorname{pinv}()$ is the pseudoinverse matrix function.
+As $\lambda$ is $Z_n$ of the corner we can now compute the H matrix for all the corners in the (t-1) frame, vertically concatenate them, and using the optical flow $\dot{\mathbf{p}}$, the velocity $\boldsymbol{V}$ in the equation 
+
+$$
+\left(\begin{array}{l}
+\mathbf{V} \\
+\boldsymbol{\Omega}
+\end{array}\right)=
+\operatorname{pinv}(\boldsymbol{H}) \dot{\mathbf{p}}
+$$
+
+Where pinv() is the pseudoinverse matrix function.
 
 In the code, a for loop from 1 to length(matched points) is used to implement the steps above. This gives us the linear and angular velocity $\boldsymbol{V}$ of the camera expressed in the camera frame. To find the linear and angular velocity expressed in the world frame we can use:
 Thus, we have calculated the linear and angular velocity of the MAV between two frames. The steps must be repeated between all the images collected in the dataset.
