@@ -111,15 +111,14 @@ for n = 2:N
         end
 
         % Z is table of point depths
-        % If you have parallel processing capability use
-        % par_velocityRANSAC(), else switch to velocityRANSAC()
-
 
         Vel_cam = par_velocityRANSAC(opt_flow,matched_points1,Z,e);
 
 
     end
+    
 %% Express Vel in world frame    
+
     R_w2c = R_c2w';
     Vel=vertcat(horzcat(R_w2c,zeros(3)),horzcat(zeros(3),R_w2c))*Vel_cam;
     
