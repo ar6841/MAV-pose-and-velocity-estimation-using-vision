@@ -1,11 +1,16 @@
 clear all;
 close all;
-clc;
-addpath('../data') 
+
+tic
+%% Start a parallel pool before running the program, otherwise MATLAB will start a pool using default settings
+
+%% Add data
+addpath('../../data') 
 %Change the number to work on both Dataset 1 and Dataset 4 (Do not use Dataset 9)
 
-datasetNum = 4;
+datasetNum = 1;
 [data, vicon, time] = init(datasetNum);
+
 %% Creating variables for storing computed values
 
 eulX = zeros(1, length(data));
@@ -14,6 +19,8 @@ eulZ = zeros('like', eulX);
 Tx = zeros('like', eulX);
 Ty = zeros('like', eulX);
 Tz = zeros('like', eulX);
+
+
 
 %% The main component of the code. Everything should be computed in the estimatePose function.
 
@@ -30,3 +37,4 @@ end
 %% Passing the required values to the Plot Function
 
 plotData(Tx, Ty, Tz, eulX, eulY, eulZ, data, vicon, time, datasetNum)
+toc

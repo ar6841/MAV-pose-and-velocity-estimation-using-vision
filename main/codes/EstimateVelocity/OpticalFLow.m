@@ -1,32 +1,36 @@
 close all;
 clear all;
 clc;
-addpath('../data')
 
-%Change this for both dataset 1 and dataset 4. Do not use dataset 9.
+addpath('../../data')
+
 datasetNum = 1;
 
 [sampledData, sampledVicon, sampledTime] = init(datasetNum);
 
 %% INITIALIZE CAMERA MATRIX AND OTHER NEEDED INFORMATION
 
-estimatedV=zeros(6,length(sampledData)-1);
+N = length(sampledData);
+
+estimatedV=zeros(6,N-1);
 
 K=[311.0520        0        201.8724;0         311.3885    113.6210;0            0           1   ];
 T_cam_body=[-0.04;0;-0.03];
 
 %% Ransac Parameters
 ransac_flag=true; %Change this to enable or disable RANSAC
+
 e=8/10; %Ransac hyper parameter(Assume P_success=0.99)
 
 cutoff_metric=120; % Increase this to reduce time but also reduce accuracy
+
 %% Calculate dt (Vectorized)
-i=2:length(sampledData);
+i=2:N;
 del=sampledData(i);  
-dt=[del(1:length(sampledData)-1).t]-[sampledData(1:(length(sampledData)-1)).t];
+dt=[del(1:N-1).t]-[sampledData(1:(N-1)).t];
 dt=lowpass(dt,0.5,1000);
 
-for n = 2:length(sampledData)
+for n = 2:N
  %% Detecting points in image n-1
     
     points1=detectFASTFeatures(sampledData(n-1).img); 
@@ -67,15 +71,18 @@ for n = 2:length(sampledData)
    
     
     if(ransac_flag==false)
+
         H=zeros(2*length(matched_points1),6);
+
         A=double.empty(0,3);
         B=double.empty(0,3);
+
         for i=1:length(matched_points1)
             %% Calculate Zc for each matched point (Depth of points)
             G=[R_c2w(1,1),  R_c2w(1,2), -matched_points1(1,i);  R_c2w(2,1), R_c2w(2,2), -matched_points1(2,i);  R_c2w(3,1), R_c2w(3,2), -1];
 
-            Lambda_solve=G\(-position_cam);
-            Z=Lambda_solve(3); 
+            Lambda_solve = G\(-position_cam);
+            Z = Lambda_solve(3); 
        
             %% Compute H matrix
             A=(1/Z)*[-1,    0,  matched_points1(1,i);   0,  -1, matched_points1(2,i)];
@@ -97,9 +104,9 @@ for n = 2:length(sampledData)
 
             %% Passing Depth of corner
 
-            G=[R_c2w(1,1),  R_c2w(1,2), -matched_points1(1,j);  R_c2w(2,1), R_c2w(2,2), -matched_points1(2,j);  R_c2w(3,1), R_c2w(3,2), -1];
-            Lambda_solve=G\(-position_cam);
-            Z(j)=Lambda_solve(3);
+            G = [R_c2w(1,1),  R_c2w(1,2), -matched_points1(1,j);  R_c2w(2,1), R_c2w(2,2), -matched_points1(2,j);  R_c2w(3,1), R_c2w(3,2), -1];
+            Lambda_solve = G\(-position_cam);
+            Z(j) = Lambda_solve(3);
         
         end
 
@@ -108,12 +115,14 @@ for n = 2:length(sampledData)
 
     end
 %% Express Vel in world frame    
-    R_w2c=inv(R_c2w);
+    R_w2c = R_c2w';
     Vel=vertcat(horzcat(R_w2c,zeros(3)),horzcat(zeros(3),R_w2c))*Vel_cam;
     
     %% STORE THE COMPUTED VELOCITY IN THE VARIABLE estimatedV AS BELOW
-    estimatedV(:,n) = Vel; % Feel free to change the variable Vel to anything that you used.
+
+    estimatedV(:,n) = Vel;
 end
+
 for i=1:6
     estimatedV(i,:)=lowpass(estimatedV(i,:),10,1000);  
 end

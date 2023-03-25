@@ -9,6 +9,11 @@ Estimation of the position,attitude and velocity of a Micro Aerial Vehicle using
 
 For localization using IMU data and Extended Kalman filtering, check [this project](https://github.com/ar6841/MAV-state-estimation-using-extended-Kalman-filter)
 
+## Dependencies
+
+1. MATLAB Computer Vision Toolbox
+2. MATLAB Parallel Processing Toolbox
+
 The tracking results are shown below:
 
 ### Part 1
