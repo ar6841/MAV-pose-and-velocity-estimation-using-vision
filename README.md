@@ -1,9 +1,9 @@
 # Drone Localization using the onboard camera
 Estimation of the position,attitude and velocity of a Micro Aerial Vehicle using perspective projection and optical flow.
 
-1_pose_estimation estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose)
+/EstimatePose estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose)
 
-2_optical_flow estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow)
+/EstimateVelocity estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow)
 
 ## **Notes**
 
@@ -13,6 +13,8 @@ For localization using IMU data and Extended Kalman filtering, check [this proje
 
 1. MATLAB Computer Vision Toolbox
 2. MATLAB Parallel Processing Toolbox
+
+## Results
 
 The tracking results are shown below:
 
