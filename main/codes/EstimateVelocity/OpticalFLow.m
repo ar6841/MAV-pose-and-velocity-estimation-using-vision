@@ -22,7 +22,7 @@ ransac_flag=true; %Change this to enable or disable RANSAC
 
 e=8/10; %Ransac hyper parameter(Assume P_success=0.99)
 
-cutoff_metric=120; % Increase this to reduce time but also reduce accuracy
+cutoff_metric = 125; % Increase this to reduce time but also reduce accuracy (MAX < 200)
 
 %% Calculate dt (Vectorized)
 i=2:N;
@@ -111,7 +111,12 @@ for n = 2:N
         end
 
         % Z is table of point depths
-        Vel_cam=velocityRANSAC(opt_flow,matched_points1,Z,R_c2w,e);
+        % If you have parallel processing capability use
+        % par_velocityRANSAC(), else switch to velocityRANSAC()
+
+
+        Vel_cam = par_velocityRANSAC(opt_flow,matched_points1,Z,e);
+
 
     end
 %% Express Vel in world frame    
