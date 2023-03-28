@@ -1,9 +1,9 @@
 # Drone Localization using the onboard camera
 Estimation of the position,attitude and velocity of a Micro Aerial Vehicle using perspective projection and optical flow.
 
-/EstimatePose estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose)
+/EstimatePose estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose.m)
 
-/EstimateVelocity estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow)
+/EstimateVelocity estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow.m)
 
 ## **Notes**
 
