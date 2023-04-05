@@ -12,7 +12,7 @@ For localization using IMU data and Extended Kalman filtering, check [this proje
 ## Dependencies
 
 1. MATLAB Computer Vision Toolbox
-2. MATLAB Parallel Processing Toolbox
+2. MATLAB Parallel Computing Toolbox
 
 ## Results
 
