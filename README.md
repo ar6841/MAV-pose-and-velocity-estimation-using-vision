@@ -88,7 +88,7 @@ x_i & y_i & 1 & 0 & 0 & 0 & -x_i^{\prime} x_i & -x_i^{\prime} y_i & -x_i^{\prime
 \end{aligned}
 $$
 
-Where $h=\operatorname{stacked}(H)$. To do this we find the A matrix for all the IDs detected and solve the SVD $A=U S V^T$ ( $h$ will be the 9th column of $V$ ).
+Where $h=\mathrm{stacked}(H)$. To do this we find the A matrix for all the IDs detected and solve the SVD $A=U S V^T$ ( $h$ will be the 9th column of $V$ ).
 
 For each AprilTag ID; in the code p_w(2*j-1) is the world x coordinate of point p(j-1). data(t).(fns{j+7})(1,i) is the image x coordinate of point p(j-1). Similarly p_w(2*j) and data(t).(fns{j+7})(2,i) are the y coordinates of the point p(j-1) in the world and image frames respectively. h is then converted to a (3x3) homography matrix HL whose sign must first be corrected with respect to some point p and its coordinates in the world and image frames, and normalized to find the required homography H.
 
@@ -120,13 +120,13 @@ $$
 & R=U\left(\begin{array}{llc}
 1 & 0 & 0 \\
 0 & 1 & 0 \\
-0 & 0 & \operatorname{det}\left(U V^T\right)
+0 & 0 & \mathrm{det}\left(U V^T\right)
 \end{array}\right) V^T
 \end{aligned}
 $$
 
-The translation $\hat{T}$ must also be scaled by $\operatorname{norm}(\hat{R})$.
-$\mathrm{R}$ describes $\quad{ }^c R_w$ and $T$ describes ${ }^c T_w$. Now we have ${ }^B R_C=\operatorname{rotx}(180) * \operatorname{rotz}(45)$ and ${ }^c T_B=[-0.04 ; 0 ;-0.03]$ from the parameters and pictures of the MAV provided. Thus we can form the equations
+The translation $\hat{T}$ must also be scaled by $\mathrm{norm}(\hat{R})$.
+$\mathrm{R}$ describes $\quad{ }^c R_w$ and $T$ describes ${ }^c T_w$. Now we have ${ }^B R_C=\mathrm{rotx}(180) * \mathrm{rotz}(45)$ and ${ }^c T_B=[-0.04 ; 0 ;-0.03]$ from the parameters and pictures of the MAV provided. Thus we can form the equations
 
 $$
 \begin{aligned}
@@ -284,7 +284,7 @@ $$
 \mathbf{V} \\
 \boldsymbol{\Omega}
 \end{array}\right)=
-\operatorname{pinv}(\boldsymbol{H}) \dot{\mathbf{p}}
+\mathrm{pinv}(\boldsymbol{H}) \dot{\mathbf{p}}
 $$
 
 Where pinv() is the pseudoinverse matrix function.
