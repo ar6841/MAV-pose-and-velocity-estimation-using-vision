@@ -190,6 +190,7 @@ $$
 \mathbf{V} \\
 \boldsymbol{\Omega}
 \end{array}\right)=\left(\boldsymbol{H}^T \mathbf{H}\right)^{-\mathbf{1}} \boldsymbol{H}^T \dot{\mathbf{p}} \\
+\\
 \mathbf{H}=\left(\begin{array}{cc}
 \frac{1}{Z_1} \boldsymbol{A}\left(\boldsymbol{p}_1\right) & \boldsymbol{B}\left(\boldsymbol{p}_1\right) \\
 \vdots \\
@@ -199,6 +200,7 @@ $$
 \vdots \\
 \dot{\boldsymbol{p}}_n
 \end{array}\right) \\
+\\
 \boldsymbol{A}\left(\boldsymbol{p}_1\right)=\left(\begin{array}{ccc}
 -1 & 0 & x \\
 0 & -1 & y
@@ -264,6 +266,7 @@ x_w \\
 y_w \\
 \lambda
 \end{array}\right)=-{ }^C \boldsymbol{P}_W \\
+\\
 & \left(\begin{array}{l}
 x_w \\
 y_w \\
