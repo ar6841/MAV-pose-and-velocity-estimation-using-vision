@@ -1,8 +1,8 @@
 # Drone Localization using the onboard camera
 
-Estimating the position, attitude and velocity of a drone flying over a mat of April tags using perspective projection and optical flow.
+Estimating the position, attitude and velocity of a drone flying over a mat of [AprilTags](https://github.com/AprilRobotics/apriltag) using perspective projection and optical flow.
 
-/EstimatePose estimates the position and attitude of an MAV using the camera onboard capturing an april tag mat on the ground (Run estimatePose.m)
+/EstimatePose estimates the position and attitude of an MAV using the camera onboard capturing an AprilTag mat on the ground (Run estimatePose.m)
 
 /EstimateVelocity estimates the velocity of the MAV using optical flow between frames. (Run OpticalFlow.m)
 
@@ -61,7 +61,7 @@ A detailed explanation of the project and the code is given below:
 
 This project entails vision-based estimation of pose, velocity and angular velocity of a drone. The data for this was collected using a Nano+ quadrotor that was either held by hand or flown through a prescribed trajectory over a mat of AprilTags, each of which has a unique ID. 
 
-## April Tags grid layout
+## AprilTags grid layout
 
 The tags are arranged in a 12 x 9 grid. The top left corner of the top left tag has been used as coordinate (0, 0) with the X coordinate going down the mat and the Y coordinate going to the right. Each tag is a 0.152 m square with 0.152 m between tags, except for the space between columns 3 and 4, and 6 and 7, which is 0.178 m.
 
