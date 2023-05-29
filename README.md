@@ -78,14 +78,14 @@ The images below are a visualization of the grid layout:
 The pose of the MAV describes the position and orientation of the MAV in the world frame. This is computed in the estimatePose() function. The first goal is to use the captured data which contains the AprilTag ID, image coordinates of the points p0, p1, p2, p3, p4 for that tag ID and compute the homography of the camera at time stamp (t). The homography can be computed because we know the world frame coordinates of all the points for all the AprilTags. The homography can be computed by solving the equation
 
 $$
-\begin{aligned}
-& \left(\begin{array}{ccccccccc}
+\left(\begin{array}{X}
 x_i & y_i & 1 & 0 & 0 & 0 & -x_i^{\prime} x_i & -x_i^{\prime} y_i & -x_i^{\prime} \\
 0 & 0 & 0 & x_i & y_i & 1 & -y_i^{\prime} x_i & -y_i^{\prime} y_i & -y_i^{\prime}
-\end{array}\right) h=0 \\
-& A h=0 \\
-&
-\end{aligned}
+\end{array}{X}\right) h=0 \\
+$$
+
+$$
+A h=0
 $$
 
 Where $h=\mathrm{stacked}(H)$. To do this we find the A matrix for all the IDs detected and solve the SVD $A=U S V^T$ ( $h$ will be the 9th column of $V$ ).
@@ -94,7 +94,7 @@ For each AprilTag ID; in the code p_w(2*j-1) is the world x coordinate of point 
 
 $\mathrm{H}$ contains the data for rotation and translation from the world to the camera frame. To get the transformation matrix we first find $K^{-1} H$ where $\mathrm{K}$ is the camera calibration matrix.
 
-$$
+```math
 \left(\begin{array}{lll}
 \hat{R}_1 & \hat{R}_2 & \hat{T}
 \end{array}\right)=\left(\begin{array}{lll}
@@ -110,7 +110,7 @@ h_{11} & h_{12} & h_{13} \\
 h_{21} & h_{22} & h_{23} \\
 h_{31} & h_{32} & h_{33}
 \end{array}\right)
-$$
+```
 
 As orthonormality bust be preserved we need to find a rotation matrix $\mathrm{R}$ by finding the SVD.
 
@@ -146,13 +146,13 @@ $$
 
 ${ }^{{ }^W} H_B$ gives us ${ }^{{ }^W} R_B$ which is a rotation matrix formed by $\mathrm{ZYX}$ Euler angle sequence. It can be converted using rotm2eul() or done manually using:
 
-$$
+```math
 \begin{aligned}
 & \boldsymbol{\beta}=\tan _2^{-1}\left(-r_{31}, \sqrt{r_{11}^2+r_{21}^2}\right) \\
 & \boldsymbol{\alpha}=\tan _2^{-1}\left(r_{21}, r_{11}\right) \\
 & \boldsymbol{\gamma}=\tan _2^{-1}\left(r_{32}, r_{33}\right)
 \end{aligned}
-$$
+```
 
 where $\boldsymbol{\alpha} \boldsymbol{\beta} \boldsymbol{\gamma}$ are ZYX Euler angles respectively
 The fourth column of ${ }^{{ }^W} H_B$ gives us the translation (position) of the MAV in the world frame. The output order of orientation(1:3) is $\mathrm{Z}, \mathrm{Y}$ and $\mathrm{X}$ Euler angles.
@@ -253,7 +253,7 @@ $$
 
 Note: in the code ${ }^C P_W$ is represented by position_cam. When we expand ${ }^C R_W$ and simplify as a system of linear equations we get.
 
-$$
+```math
 \begin{aligned}
 & \left(\begin{array}{lll}
 r_{11} & r_{12} & -x \\
@@ -268,14 +268,15 @@ y_w \\
 x_w \\
 y_w \\
 \lambda
-\end{array}\right)=-G^{-1} \quad{ }^C \boldsymbol{P}_W \text { where } G=\left(\begin{array}{lll}
+\end{array}\right)=-G^{-1}\quad{}^C\boldsymbol{P}_W 
+\text{ where } G=\left(\begin{array}{lll}
 r_{11} & r_{12} & -x \\
 r_{21} & r_{22} & -y \\
 r_{31} & r_{32} & -1
 \end{array}\right) \\
 &
 \end{aligned}
-$$
+```
 
 As $\lambda$ is $Z_n$ of the corner we can now compute the H matrix for all the corners in the (t-1) frame, vertically concatenate them, and using the optical flow $\dot{\mathbf{p}}$, the velocity $\boldsymbol{V}$ in the equation 
 
